@@ -1,0 +1,7 @@
+note over browser
+user writes the new note and clicks submit button
+end note
+
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: HTTP Response status code 201
