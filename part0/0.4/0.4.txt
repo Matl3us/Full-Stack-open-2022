@@ -3,6 +3,12 @@ user writes the new note and clicks submit button
 end note
 
 browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+
+note over server
+server creates new note object and 
+adds it to the array called notes
+end note
+
 server-->browser: HTTP Response status code 302
 
 note over browser
