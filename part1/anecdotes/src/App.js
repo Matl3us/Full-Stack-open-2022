@@ -12,12 +12,13 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
-
+  const [best, setBest] = useState(0)
   const [points, addPoints] = useState(new Uint8Array(7))
 
   const handleVote = () => {
-    const copy = { ...points }
+    const copy = points.map(Number)
     copy[selected] += 1
+    setBest(copy.indexOf(Math.max(...copy)))
     addPoints(copy)
   }
 
@@ -27,9 +28,10 @@ const App = () => {
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <div>
         {anecdotes[selected]}
-        <br/>
+        <br />
         has {points[selected]} votes.
       </div>
       <button onClick={handleVote}>
@@ -38,6 +40,10 @@ const App = () => {
       <button onClick={handleNext}>
         next anecdote
       </button>
+      <h1>Anecdote with most votes</h1>
+      {anecdotes[best]}
+      <br />
+      has {points[best]} votes.
     </div>
   )
 }
