@@ -7,7 +7,7 @@ const Part = ({ part }) => (
 )
 
 const Total = ({ sum }) => (
-  <p>Number of exercises {sum}</p>
+  <b>total of {sum} exercises</b>
 )
 
 const Content = ({ parts }) => (
@@ -16,12 +16,21 @@ const Content = ({ parts }) => (
   </div>
 )
 
-const Course = ({ course }) => (
-  <div>
-    <Header name={course.name} />
-    <Content parts={course.parts} />
-  </div>
-)
+const Course = ({ course }) => {
+  let sum = 0
+  const sumExercises = (part) => {
+    sum += part.exercises
+  }
+  course.parts.forEach(sumExercises)
+
+  return (
+    <div>
+      <Header name={course.name} />
+      <Content parts={course.parts} />
+      <Total sum={sum} />
+    </div>
+  )
+}
 
 const App = () => {
   const course = {
@@ -42,6 +51,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
