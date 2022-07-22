@@ -16,21 +16,13 @@ const Content = ({ parts }) => (
   </div>
 )
 
-const Course = ({ course }) => {
-  let sum = 0
-  const sumExercises = (part) => {
-    sum += part.exercises
-  }
-  course.parts.forEach(sumExercises)
-
-  return (
-    <div>
-      <Header name={course.name} />
-      <Content parts={course.parts} />
-      <Total sum={sum} />
-    </div>
-  )
-}
+const Course = ({ course }) => (
+  <div>
+    <Header name={course.name} />
+    <Content parts={course.parts} />
+    <Total sum={course.parts.reduce((partialSum, item) => partialSum + item.exercises, 0)} />
+  </div>
+)
 
 const App = () => {
   const course = {
