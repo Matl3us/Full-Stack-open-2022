@@ -9,7 +9,7 @@ const Number = ({ number }) => {
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas' }
-  ]) 
+  ])
   const [newName, setNewName] = useState('')
 
   const addName = (event) => {
@@ -18,8 +18,19 @@ const App = () => {
       name: newName
     }
 
-    setPersons(persons.concat(personObject))
-    setNewName('')
+    const checkIfExists = (object) => {
+      if (JSON.stringify(object) === JSON.stringify(personObject))
+        return false
+      else
+        return true
+    }
+
+    if (persons.every(checkIfExists)) {
+      setPersons(persons.concat(personObject))
+      setNewName('')
+    }
+    else
+      alert(`${newName} is already added to phonebook`)
   }
 
   const handleNameChange = (event) => {
@@ -31,7 +42,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addName}>
         <div>
-          name: <input value={newName} onChange={handleNameChange}/>
+          name: <input value={newName} onChange={handleNameChange} />
         </div>
         <div>
           <button type="submit">add</button>
@@ -39,8 +50,8 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <div>
-        {persons.map(person => 
-        <Number key={person.name} number={person} />)}
+        {persons.map(person =>
+          <Number key={person.name} number={person} />)}
       </div>
     </div>
   )
