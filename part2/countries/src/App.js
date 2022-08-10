@@ -1,65 +1,14 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-
-const CountryList = ({ countries, selected, setCountry }) => {
-  if (countries.length > 10) {
-    return (
-      <div>Too many matches, specify another filter</div>
-    )
-  }
-  else if (countries.length > 1) {
-    const showDetails = () => {
-      if (selected.length != 0)
-        return (
-          <Country country={selected} />
-        )
-      else
-        return (
-          <p>Non selected.</p>
-        )
-    }
-
-    return (
-      <div>
-        {countries.map(country =>
-          <div key={country.name.common}>
-            {country.name.common}
-            <button onClick={() => setCountry(country)}>
-              show
-            </button>
-          </div>)}
-        {showDetails()}
-      </div>
-    )
-  }
-  else if (countries.length === 1) {
-    return (
-      <Country country={countries[0]} />
-    )
-  }
-}
-
-const Country = ({ country }) => {
-  return (
-    <div key={country.name.common}>
-      <h2>{country.name.common}</h2>
-      <p>capital {country.capital}</p>
-      <p>area {country.area}</p>
-      <h3>languages:</h3>
-      <ul>
-        {Object.values(country.languages).map(name =>
-          <li key={name}>{name}</li>
-        )}
-      </ul>
-      <img src={country.flags.png} alt="Country flag"></img>
-    </div>
-  )
-}
+import CountryList from './components/CountryList'
 
 const App = () => {
   const [countries, setCountries] = useState([])
+  const [weather, setWeather] = useState('')
   const [filter, setFilter] = useState('')
   const [selected, setCountry] = useState([])
+
+  const api_key = process.env.REACT_APP_API_KEY
 
   useEffect(() => {
     axios
@@ -91,7 +40,9 @@ const App = () => {
       </div>
       <div>
         <CountryList countries={filteredCountries}
-          selected={selected} setCountry={setCountry} />
+          selected={selected} setCountry={setCountry}
+          weather={weather} setWeather={setWeather}
+          api_key={api_key} />
       </div>
     </div>
   )
