@@ -67,7 +67,7 @@ const App = () => {
           setNewNumber('')
           setTimeout(() => {
             setMessage(null)
-          }, 3000)
+          }, 4000)
         })
     }
     else {
@@ -83,7 +83,15 @@ const App = () => {
             setNewNumber('')
             setTimeout(() => {
               setMessage(null)
-            }, 3000)
+            }, 4000)
+          })
+          .catch(error => {
+            setMessage(`Information of ${personObject.name} has already been removed form the server`)
+            setError(true)
+            setTimeout(() => {
+              setMessage(null)
+            }, 4000)
+            setPersons(persons.filter(p => p.id !== person.id))
           })
       }
     }
@@ -108,6 +116,11 @@ const App = () => {
         .deletePerson(id)
         .then(response => {
           setPersons(persons.filter(p => p.id !== id))
+          setMessage(`Number deleted`)
+          setError(false)
+          setTimeout(() => {
+            setMessage(null)
+          }, 4000)
         })
     }
   }
